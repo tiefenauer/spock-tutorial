@@ -9,16 +9,16 @@ import spock.lang.Unroll
  */
 class RadioSpecification extends Specification {
 
-    def radio;
+    def radio
 
     /*
     Simple spock test
      */
     def "creating a new radio"(){
         when:
-            radio = new Radio();
+            radio = new Radio()
         then:
-            radio.pluggedIn;
+            radio.pluggedIn
     }
 
     /*
@@ -26,11 +26,11 @@ class RadioSpecification extends Specification {
      */
     def "turning on the radio"() {
         setup:
-            radio = new Radio();
+            radio = new Radio()
         when:
-            radio.switchOnOff();
+            radio.switchOnOff()
         then:
-            radio.isTurnedOn();
+            radio.isTurnedOn()
     }
 
     /*
@@ -38,12 +38,12 @@ class RadioSpecification extends Specification {
      */
     def "turning the radio on and off again"(){
         setup:
-            radio = new Radio();
+            radio = new Radio()
         when:
-            radio.switchOnOff();
-            radio.switchOnOff();
+            radio.switchOnOff()
+            radio.switchOnOff()
         then:
-            !radio.isTurnedOn();
+            !radio.isTurnedOn()
     }
 
     /*
@@ -51,29 +51,31 @@ class RadioSpecification extends Specification {
      */
     def "turning on the radio when it's not plugged in"(){
         setup:
-            radio = new Radio();
-            radio.pluggedIn = false;
+            radio = new Radio()
+            radio.pluggedIn = false
         when:
-            radio.switchOnOff();
+            radio.switchOnOff()
         then:
-            thrown(RadioUnpluggedException);
+            thrown(RadioUnpluggedException)
             !radio.turnedOn
     }
 
     /*
     Unrolling a sequence of values
      */
-    @Unroll("selecting station '#stationName' shows as '#displayName' in display")
+    @Unroll("tuning to frequency '#frequency' shows as '#displayFrequency' in display")
     def "tuning to different stations"(){
         setup:
-            radio = new Radio();
+            radio = new Radio()
         when:
-            radio.selectStation(stationName);
-            radio.addPreset(Mock(RadioStation));
+            radio.tuneTo(frequency)
         then:
-            radio.getDisplay() == displayName;
+            radio.displayFrequency == displayFrequency
         where:
-            stationName << ["Dani F.M.", "Radio Paradise", "A really long station name which will definitely not fit into the display"];
+            frequency << [103.8, 194.95, 99.0]
+            displayFrequency << ["103.80 FM", "194.95 FM", "99.00 FM"]
+    }
+
     /*
     Working with mocks
      */
