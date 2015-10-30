@@ -14,9 +14,10 @@ public class Radio {
     private String currentStation;
     private String currentFrequency;
     private List<RadioStation> presets = new ArrayList<>();
+    private boolean pluggedIn;
 
     public Radio() {
-
+        pluggedIn = true;
     }
 
     public void switchOnOff(){
@@ -53,5 +54,13 @@ public class Radio {
 
     public void addPreset(RadioStation station) {
         presets.add(station);
+    }
+
+    public boolean isPluggedIn() {
+        return pluggedIn;
+    }
+
+    public void setPluggedIn(boolean pluggedIn) {
+        this.pluggedIn = pluggedIn;
     }
 }
