@@ -20,7 +20,9 @@ public class Radio {
         pluggedIn = true;
     }
 
-    public void switchOnOff(){
+    public void switchOnOff() throws RadioUnpluggedException {
+        if (!pluggedIn)
+            throw new RadioUnpluggedException();
         turnedOn = !turnedOn;
     }
 

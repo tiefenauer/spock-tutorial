@@ -21,7 +21,7 @@ class RadioSpecification extends Specification {
     }
 
     /*
-    Spock test with 
+    Spock test with Setup
      */
     def "turning on the radio"() {
         setup:
@@ -32,6 +32,9 @@ class RadioSpecification extends Specification {
             radio.isTurnedOn();
     }
 
+    /*
+    Another Spock test with Setup
+     */
     def "turning the radio on and off again"(){
         setup:
             radio = new Radio();
@@ -42,6 +45,9 @@ class RadioSpecification extends Specification {
             !radio.isTurnedOn();
     }
 
+    /*
+    Exception Conditions
+     */
     def "turning on the radio when it's not plugged in"(){
         setup:
             radio = new Radio();
@@ -50,6 +56,7 @@ class RadioSpecification extends Specification {
             radio.switchOnOff();
         then:
             thrown(RadioUnpluggedException);
+            !radio.turnedOn
     }
 
 }
