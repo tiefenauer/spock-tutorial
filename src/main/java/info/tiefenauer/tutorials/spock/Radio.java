@@ -9,12 +9,11 @@ import java.util.List;
  */
 public class Radio {
 
-    private String stationName;
+    private boolean pluggedIn;
     private boolean turnedOn;
     private String currentStation;
-    private String currentFrequency;
+    private double currentFrequency;
     private List<RadioStation> presets = new ArrayList<>();
-    private boolean pluggedIn;
 
     public Radio() {
         pluggedIn = true;
@@ -30,15 +29,12 @@ public class Radio {
         return turnedOn;
     }
 
-    public void selectStation(String stationName) {
-        currentStation = stationName;
+    public void selectStation(RadioStation station){
+        currentStation = station.getName();
+        tuneTo(station.getFrequency());
     }
 
-    public String getDisplay() {
-        return getShortName(currentStation);
-    }
-
-    private String getShortName(String currentStation) {
+    public String getDisplayName() {
         if (currentStation == null)
             return "";
         if (currentStation.length() > 10)
@@ -46,11 +42,15 @@ public class Radio {
         return currentStation;
     }
 
-    public void tuneTo(double frequency) {
-        currentFrequency = new DecimalFormat("#.00").format(frequency) + " FM";
+    public String getDisplayFrequency(){
+        return new DecimalFormat("#.00").format(currentFrequency) + " FM";
     }
 
-    public String getCurrentFrequency() {
+    public void tuneTo(double frequency){
+        currentFrequency = frequency;
+    }
+
+    public double getCurrentFrequency() {
         return currentFrequency;
     }
 

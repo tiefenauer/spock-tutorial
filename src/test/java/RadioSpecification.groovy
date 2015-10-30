@@ -74,6 +74,41 @@ class RadioSpecification extends Specification {
             radio.getDisplay() == displayName;
         where:
             stationName << ["Dani F.M.", "Radio Paradise", "A really long station name which will definitely not fit into the display"];
+    /*
+    Working with mocks
+     */
+    def "selecting mocked station"(){
+        setup:
+            radio = new Radio()
+            def station = Mock(RadioStation)
+            station.frequency >> 103.8
+            station.name >> "Dani F.M."
+        when:
+            radio.selectStation(station)
+        then:
+            radio.currentFrequency == 103.8
+            radio.displayFrequency == "103.80 FM"
+            radio.displayName == "Dani F.M."
+    }
+
+    /*
+    Working with mocks: extended example
+     */
+    @Unroll("Selecting station '#stationName' with frequency '#frequency'")
+    def "selecting mocked stations subsequently"(){
+        setup:
+            radio = new Radio()
+            def station = Mock(RadioStation)
+            station.frequency >> frequency
+            station.name >> stationName
+        when:
+            radio.selectStation(station)
+        then:
+            radio.currentFrequency == frequency
+            radio.displayName == displayName
+        where:
+            frequency << [103.8, 99.9, 94.5]
+            stationName << ["Dani F.M.", "Radio Paradise", "A really long station name which will definitely not fit into the display"]
             displayName << ["Dani F.M.", "Radio P...",     "A reall..."]
     }
 
