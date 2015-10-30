@@ -1,4 +1,5 @@
 import info.tiefenauer.tutorials.spock.Radio
+import info.tiefenauer.tutorials.spock.RadioStation
 import info.tiefenauer.tutorials.spock.RadioUnpluggedException
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -57,6 +58,23 @@ class RadioSpecification extends Specification {
         then:
             thrown(RadioUnpluggedException);
             !radio.turnedOn
+    }
+
+    /*
+    Unrolling a sequence of values
+     */
+    @Unroll("selecting station '#stationName' shows as '#displayName' in display")
+    def "tuning to different stations"(){
+        setup:
+            radio = new Radio();
+        when:
+            radio.selectStation(stationName);
+            radio.addPreset(Mock(RadioStation));
+        then:
+            radio.getDisplay() == displayName;
+        where:
+            stationName << ["Dani F.M.", "Radio Paradise", "A really long station name which will definitely not fit into the display"];
+            displayName << ["Dani F.M.", "Radio P...",     "A reall..."]
     }
 
 }

@@ -12,6 +12,9 @@ public class RadioStation {
         setName(name);
         setFrequency(Double.valueOf(frequency));
     }
+    public RadioStation(){
+
+    }
 
     public double getFrequency() {
         return _frequency;
